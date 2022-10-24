@@ -13,3 +13,10 @@ after_success:
   - docker build -t farazsanal/multi-nginx ./nginx
   - docker build -t farazsanal/multi-server ./server
   - docker build -t farazsanal/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take those images and push to docker hub
+  - docker push farazsanal/multi-client
+  - docker push farazsanal/multi-nginx
+  - docker push farazsanal/multi-server
+  - docker push farazsanal/multi-worker
