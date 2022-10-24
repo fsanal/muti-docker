@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t farazsanal/react-test -f ./client/Dockerfile.dev ./client
+
+script: 
+  - docker  run -e CI=true farazsanal/react-test npm test 
+
+after_success: 
+  - docker build -t farazsanal/multi-client ./client
+  - docker build -t farazsanal/multi-nginx ./nginx
+  - docker build -t farazsanal/multi-server ./server
+  - docker build -t farazsanal/multi-worker ./worker
